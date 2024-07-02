@@ -1,24 +1,25 @@
 import redisClient from '../utils/redis';
 import dbClient from '../utils/db';
+
 class AppController {
-  /**
-   * should return if Redis is alive and if the DB is alive too
-   * by using the 2 utils created previously:
-   * { "redis": true, "db": true } with a status code 200
-   */
-  static getStatus(request, response) {
+  static getStatus(req, res) {
     const status = {
       redis: redisClient.isAlive(),
       db: dbClient.isAlive(),
     };
-    response.status(200).send(status);
+    res.status(200).json(status);
   }
-  static async getStats(request, response) {
-    const stats = {
-      users: await dbClient.nbUsers(),
-      files: await dbClient.nbFiles(),
-    };
-    response.status(200).send(stats);
+
+  static async getStats(req, res) {
+    try {
+      const stats = {
+        users: await dbClient.nbUsers(),
+        files: await dbClient.nbFiles(),
+      };
+      res.status(200).json(stats);
+    } catch (err) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 }
 
