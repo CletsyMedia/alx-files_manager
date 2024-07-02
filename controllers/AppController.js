@@ -7,19 +7,15 @@ class AppController {
       redis: redisClient.isAlive(),
       db: dbClient.isAlive(),
     };
-    res.status(200).json(status);
+    res.status(200).send(status);
   }
 
   static async getStats(req, res) {
-    try {
-      const stats = {
-        users: await dbClient.nbUsers(),
-        files: await dbClient.nbFiles(),
-      };
-      res.status(200).json(stats);
-    } catch (err) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    const stats = {
+      users: await dbClient.nbUsers(),
+      files: await dbClient.nbFiles(),
+    };
+    res.status(200).send(stats);
   }
 }
 
