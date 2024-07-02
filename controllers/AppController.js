@@ -1,27 +1,25 @@
-const { getRedisInfo, getDBStats } = require('../utils');
-
-const AppController = {
-  async getStatus(req, res) {
-    try {
-      const redisAlive = await getRedisInfo();
-      const dbAlive = await getDBStats();
-
-      res.status(200).json({ redis: redisAlive, db: dbAlive });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  async getStats(req, res) {
-    try {
-      const numUsers = await getDBStats('users');
-      const numFiles = await getDBStats('files');
-
-      res.status(200).json({ users: numUsers, files: numFiles });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+import redisClient from '../utils/redis';
+import dbClient from '../utils/db';
+class AppController {
+  /**
+   * should return if Redis is alive and if the DB is alive too
+   * by using the 2 utils created previously:
+   * { "redis": true, "db": true } with a status code 200
+   */
+  static getStatus(request, response) {
+    const status = {
+      redis: redisClient.isAlive(),
+      db: dbClient.isAlive(),
+    };
+    response.status(200).send(status);
   }
-};
+  static async getStats(request, response) {
+    const stats = {
+      users: await dbClient.nbUsers(),
+      files: await dbClient.nbFiles(),
+    };
+    response.status(200).send(stats);
+  }
+}
 
-module.exports = AppController;
+export default AppController;
