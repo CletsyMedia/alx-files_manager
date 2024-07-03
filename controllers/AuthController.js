@@ -13,7 +13,8 @@ class AuthController {
    * If no user has been found, return an error Unauthorized with a status code 401
    * Otherwise:
    * Generate a random string (using uuidv4) as token
-   * Create a key: auth_<token>
+   *
+   * * Create a key: auth_<token>
    * Use this key for storing in Redis (by using the redisClient create previously)
    * the user ID for 24 hours
    * Return this token: { "token": "155342df-2399-41da-9e8c-458b6ac52a0c" }

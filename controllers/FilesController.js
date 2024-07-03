@@ -248,7 +248,8 @@ class FilesController {
    * authenticate or not the owner of the
    * file, return an error Not found with a status code 404
    * If the type of the file document is folder, return an error A folder doesn't have content
-   * with a status code 400
+   *
+   * * with a status code 400
    * If the file is not locally present, return an error Not found with a status code 404
    * Otherwise:
    * By using the module mime-types, get the MIME-type based on the name of the file

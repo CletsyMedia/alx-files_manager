@@ -4,7 +4,8 @@ import dbClient from '../utils/db';
 class AppController {
   /**
    * should return if Redis is alive and if the DB is alive too
-   * by using the 2 utils created previously:
+   *
+   * * by using the 2 utils created previously:
    * { "redis": true, "db": true } with a status code 200
    */
   static getStatus(request, response) {
