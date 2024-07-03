@@ -9,7 +9,6 @@ const userQueue = new Queue('userQueue');
 class UsersController {
   /**
    * Creates a user using email and password
-   *
    * To create a user, you must specify an email and a password
    * If the email is missing, return an error Missing email with
    * a status code 400
